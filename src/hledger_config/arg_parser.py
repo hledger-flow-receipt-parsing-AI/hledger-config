@@ -209,6 +209,28 @@ def create_arg_parser() -> argparse.ArgumentParser:
         ),
     )
 
+    # Full pipeline (replaces start.sh).
+    parser.add_argument(
+        "--run-pipeline",
+        action="store_true",
+        required=False,
+        help=(
+            "Run the full preprocessing pipeline: validate config, set up"
+            " accounts, check categorisation, match transactions, preprocess"
+            " assets, run hledger-flow import, and generate balance report."
+            " Replaces the old start.sh shell script."
+        ),
+    )
+    parser.add_argument(
+        "--randomize",
+        action="store_true",
+        required=False,
+        help=(
+            "When used with --run-pipeline, randomize financial data before"
+            " plotting (for demos/screenshots)."
+        ),
+    )
+
     return parser
 
 
