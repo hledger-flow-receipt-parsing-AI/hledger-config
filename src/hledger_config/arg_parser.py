@@ -230,6 +230,16 @@ def create_arg_parser() -> argparse.ArgumentParser:
             " plotting (for demos/screenshots)."
         ),
     )
+    parser.add_argument(
+        "--non-interactive",
+        action="store_true",
+        required=False,
+        help=(
+            "When used with --run-pipeline, skip interactive steps (e.g."
+            " cross-currency CSV-to-CSV matching TUI prompts). Useful for"
+            " automated testing and CI."
+        ),
+    )
 
     return parser
 
