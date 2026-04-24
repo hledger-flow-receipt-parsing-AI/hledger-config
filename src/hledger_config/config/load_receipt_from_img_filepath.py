@@ -13,7 +13,7 @@ def load_receipt_from_img_filepath(
 ) -> Receipt:
     desired_receipts: List[Receipt] = []
     for receipt in labelled_receipts:
-        if receipt.raw_img_filepath == raw_img_filepath:
+        if raw_img_filepath in receipt.raw_img_filepaths:
             desired_receipts.append(receipt)
     if len(desired_receipts) == 1:
         return desired_receipts[0]
