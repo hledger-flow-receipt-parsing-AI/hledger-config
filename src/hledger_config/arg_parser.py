@@ -241,6 +241,49 @@ def create_arg_parser() -> argparse.ArgumentParser:
         ),
     )
 
+    # AI: skip suggestions in TUI.
+    parser.add_argument(
+        "--skip-ai",
+        action="store_true",
+        required=False,
+        help=(
+            "Skip AI suggestion inference when labelling receipts"
+            " (used with --tui-label-receipts). Saves power and"
+            " startup time."
+        ),
+    )
+
+    # AI model training.
+    parser.add_argument(
+        "--train-models",
+        action="store_true",
+        required=False,
+        help=(
+            "Train/retrain AI models on accumulated labelled data."
+            " Skips training if dataset unchanged since last run."
+        ),
+    )
+    parser.add_argument(
+        "--model",
+        type=str,
+        choices=["setfit", "qwen-lora", "all"],
+        default="all",
+        required=False,
+        help=(
+            "Which AI model to train (used with --train-models)."
+            " Default: all eligible models."
+        ),
+    )
+    parser.add_argument(
+        "--force-retrain",
+        action="store_true",
+        required=False,
+        help=(
+            "Force retraining even if the dataset hash hasn't"
+            " changed (used with --train-models)."
+        ),
+    )
+
     return parser
 
 

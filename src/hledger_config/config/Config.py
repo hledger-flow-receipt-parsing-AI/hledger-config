@@ -14,6 +14,7 @@ from hledger_config.config.AccountConfig import (
     LinkedAccount,
     SplitGroup,
 )
+from hledger_config.config.AIConfig import AIConfig
 from hledger_config.config.CategorisationConfig import (
     CategorisationConfig,
 )
@@ -33,6 +34,7 @@ class Config:
     categorisation: CategorisationConfig
     csv_encoding: str
     matching_algo: MatchingAlgoConfig
+    ai: Optional[AIConfig] = None
 
     def __post_init__(self):
         self.category_namespace: CategoryNamespace = load_categories_from_yaml(
@@ -129,6 +131,9 @@ class Config:
             ],
         )
 
+        ai_dict = config_dict.get("ai")
+        ai_config = AIConfig.from_dict(ai_dict) if ai_dict else None
+
         config = Config(
             accounts=accounts,
             dir_paths=dir_paths,
@@ -136,6 +141,7 @@ class Config:
             categorisation=categorisation,
             csv_encoding=config_dict.get("csv_encoding", "utf-8"),
             matching_algo=matching_algo,
+            ai=ai_config,
         )
 
         # NEW: Export ABS_ASSET_PATH immediately after config creation
