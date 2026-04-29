@@ -241,6 +241,28 @@ def create_arg_parser() -> argparse.ArgumentParser:
         ),
     )
 
+    # Receipt grouping: group duplicate images before labelling.
+    parser.add_argument(
+        "--group-receipts",
+        action="store_true",
+        required=False,
+        help=(
+            "Interactively group duplicate receipt images before labelling. "
+            "Identical images are auto-grouped by content hash; remaining "
+            "images are shown for manual grouping (n=new, g=group, p=prime, "
+            "s=skip). Can be used standalone or with --tui-label-receipts."
+        ),
+    )
+    parser.add_argument(
+        "--regroup",
+        action="store_true",
+        required=False,
+        help=(
+            "Force re-grouping even if a saved grouping exists. "
+            "Used with --group-receipts."
+        ),
+    )
+
     # AI: skip suggestions in TUI.
     parser.add_argument(
         "--skip-ai",
