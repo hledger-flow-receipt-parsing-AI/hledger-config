@@ -196,6 +196,17 @@ def create_arg_parser() -> argparse.ArgumentParser:
             " the missing match may be there. Informational only (exits 0)."
         ),
     )
+    parser.add_argument(
+        "--check-categorisation-overlap",
+        action="store_true",
+        required=False,
+        help=(
+            "Check that categorisation rules are one-hot: each transaction"
+            " matches at most one rule. Reports transactions where multiple"
+            " rules match (order-dependent categorisation). Exits non-zero"
+            " if any overlaps are found."
+        ),
+    )
 
     # Debugging functionality.
     parser.add_argument(
