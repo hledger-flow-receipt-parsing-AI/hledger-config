@@ -302,6 +302,19 @@ def create_arg_parser() -> argparse.ArgumentParser:
         ),
     )
 
+    # hledger-ai: while labelling, the receipt photo gets thin boxes around
+    # the text behind the AI suggestion of the focused question.
+    parser.add_argument(
+        "--no-receipt-highlights",
+        action="store_true",
+        required=False,
+        help=(
+            "While labelling, do not draw boxes on the receipt photo around"
+            " the text behind the focused question's AI suggestion (Alt+h"
+            " toggles them in the TUI)."
+        ),
+    )
+
     # AI model training.
     parser.add_argument(
         "--train-models",
