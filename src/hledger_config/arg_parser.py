@@ -286,6 +286,22 @@ def create_arg_parser() -> argparse.ArgumentParser:
         ),
     )
 
+    # hledger-ai: train the locally trained receipt suggestion models.  The
+    # flag lives here because hledger_preprocessor's parser does; hledger-ai
+    # does the work (and takes the same names on its own command line).
+    parser.add_argument(
+        "--train",
+        nargs="*",
+        metavar="NAME",
+        default=None,
+        required=False,
+        help=(
+            "Train the receipt suggestion models that are out of date."
+            " With names, only those models (e.g. rapidocr-linear) and"
+            " strategies (e.g. ST-1)."
+        ),
+    )
+
     # AI model training.
     parser.add_argument(
         "--train-models",
