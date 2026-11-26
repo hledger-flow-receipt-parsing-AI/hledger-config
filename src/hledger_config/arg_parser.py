@@ -196,27 +196,17 @@ def create_arg_parser() -> argparse.ArgumentParser:
             " the missing match may be there. Informational only (exits 0)."
         ),
     )
-    parser.add_argument(
-        "--check-categorisation-overlap",
-        action="store_true",
-        required=False,
-        help=(
-            "Check that categorisation rules are one-hot: each transaction"
-            " matches at most one rule. Reports transactions where multiple"
-            " rules match (order-dependent categorisation). Exits non-zero"
-            " if any overlaps are found."
-        ),
-    )
-
-    # Debugging functionality.
+    # Categorise the bank transactions no rule covers yet.
     parser.add_argument(
         "-q",
-        "--quick-categorisation",
+        "--categorise-transactions",
         action="store_true",
         required=False,
         help=(
-            "Quickly get feedback on unidentified transactions to quickly"
-            " create (private) categorisation rules."
+            "Open the TUI that turns every uncategorised bank transaction"
+            " into a one-hot categorisation rule (categorisation_rules.yaml"
+            " in the finance root), with AI suggestions when a model is"
+            " trained."
         ),
     )
 
@@ -359,13 +349,6 @@ def assert_has_only_valid_chars(*, input_string: str) -> None:
 
 @typechecked
 def assert_args_are_valid(*, args: argparse.Namespace) -> None:
-    if args.quick_categorisation:
-        if not args.preprocess_csvs:
-            raise ValueError(
-                "To quickly create new .csv transaction categorisation rules,"
-                " you need to include the --preprocess-csvs arg and the"
-                " --pre-processed-output-dir."
-            )
     if args.preprocess_csvs:
         if args.pre_processed_output_dir is None:
             raise ValueError(

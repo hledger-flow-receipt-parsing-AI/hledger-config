@@ -56,6 +56,10 @@ class AccountConfig:
     # Date format: "dmy" (DD-MM-YYYY) or "mdy" (MM-DD-YYYY) or None (auto)
     date_format: Optional[str] = None
 
+    # The character between the columns of the bank's export: "," (default)
+    # or e.g. ";" (Dutch bank exports).
+    csv_delimiter: Optional[str] = None
+
     # Linked accounts: other tracked accounts that transact with this one
     linked_accounts: Optional[Tuple[LinkedAccount, ...]] = None
 

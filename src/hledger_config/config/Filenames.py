@@ -12,6 +12,9 @@ class FileNames:
     tui_label_filename: str
     receipt_img: ReceiptImgConfig
     categories_filename: str
+    # The one-hot categorisation rules of the bank transactions, next to
+    # the categories in the finance root.
+    categorisation_rules_filename: str = "categorisation_rules.yaml"
 
     def get_filepath(
         self, dir_path_config: DirPathsConfig, filename: str
@@ -28,6 +31,13 @@ class FileNames:
                 path_name="root_finance_path", absolute=True
             )
             return os.path.join(root_finance_path, self.categories_filename)
+        elif filename == "categorisation_rules_filename":
+            root_finance_path = dir_path_config.get_path(
+                path_name="root_finance_path", absolute=True
+            )
+            return os.path.join(
+                root_finance_path, self.categorisation_rules_filename
+            )
         else:
             raise NotImplementedError(
                 f"Don't yet know how to get the filepath of:{filename}"

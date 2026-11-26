@@ -52,6 +52,11 @@ class AIConfig:
     auto_accept_threshold: float = 0.9
     suggest_threshold: float = 0.5
 
+    # Another finance root on this machine whose trained CSV transaction
+    # model suggests categories here (a root with no rules yet borrows
+    # the model of one that has them).  None: this root's own model.
+    transaction_model_root: Optional[str] = None
+
     def is_module_enabled(self, module_name: str) -> bool:
         """Check if an extraction module is enabled."""
         mod_cfg = self.extraction_modules.get(module_name, {})
@@ -83,6 +88,7 @@ class AIConfig:
             "training",
             "auto_accept_threshold",
             "suggest_threshold",
+            "transaction_model_root",
         ):
             if fld in ai_dict:
                 kwargs[fld] = ai_dict[fld]

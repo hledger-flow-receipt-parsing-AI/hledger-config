@@ -44,6 +44,18 @@ class Config:
             )
         )
 
+    def categories_path(self) -> str:
+        return self.file_names.get_filepath(
+            dir_path_config=self.dir_paths, filename="categories_filename"
+        )
+
+    def categorisation_rules_path(self) -> str:
+        """The one-hot rules file of this finance root (may not exist yet)."""
+        return self.file_names.get_filepath(
+            dir_path_config=self.dir_paths,
+            filename="categorisation_rules_filename",
+        )
+
     @staticmethod
     def from_dict(*, config_dict: dict[str, Any]) -> "Config":
         accounts: List[AccountConfig] = []
@@ -129,6 +141,9 @@ class Config:
             categories_filename=config_dict["file_names"][
                 "categories_filename"
             ],
+            categorisation_rules_filename=config_dict["file_names"].get(
+                "categorisation_rules_filename", "categorisation_rules.yaml"
+            ),
         )
 
         ai_dict = config_dict.get("ai")
@@ -321,6 +336,12 @@ def create_account_config_from_yaml(
 
     decimal_format = account_config_dict.get("decimal_format")
     date_format = account_config_dict.get("date_format")
+    csv_delimiter = account_config_dict.get("csv_delimiter")
+    if csv_delimiter is not None and len(str(csv_delimiter)) != 1:
+        raise ValueError(
+            "csv_delimiter must be a single character, got:"
+            f" {csv_delimiter!r}"
+        )
 
     # --- Linked accounts (optional) ---
     linked_accounts_raw = account_config_dict.get("linked_accounts")
@@ -350,6 +371,9 @@ def create_account_config_from_yaml(
         merge_column=merge_column,
         decimal_format=decimal_format,
         date_format=date_format,
+        csv_delimiter=(
+            str(csv_delimiter) if csv_delimiter is not None else None
+        ),
         linked_accounts=linked_accounts,
         is_crypto=is_crypto,
     )
